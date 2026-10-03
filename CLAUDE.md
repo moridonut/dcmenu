@@ -9,8 +9,10 @@
 macOS SDK の無い環境で書いたため、**コンパイルも実機確認もしていません**。確認済みなのは次だけです。
 
 - tree-sitter-swift による構文チェック（型チェックではない）
-- メニューファイルの解析とマクロ展開のロジック（同じ処理を Python で書き起こし、同梱の 4 つの `.menu` を
+- メニューファイルの解析とマクロ展開のロジック（同じ処理を Python で書き起こし、同梱の `.menu` を
   スペース・`'` を含むパスで展開して、`sh` が意図どおりの引数に分けることを確認）
+- `dcmenu-zip` の zip 経路（Linux の Info-ZIP で、日本語・スペース入りのフォルダ、同名フォルダの中への圧縮）。
+  7zz 経路・`-e`（osascript）・`dcmenu-unzip` は未確認
 - DC の `cm_UniversalSingleDirectSort` が受け取るパラメータ（DC のソース `src/umaincommands.pas` で確認）
 
 ポップアップメニューと 1 文字アクセラレータの仕組みは、実運用している姉妹プロジェクト
@@ -39,6 +41,7 @@ Sources/Platform.swift   AppKit 側: メニュー表示、表示位置、フォ�
 Sources/main.swift       引数解析とメインループ（トップレベルコードはこのファイルだけ）
 menus/*.menu             あふのメニューを移植した既定のメニュー
 bin/dcmenu-copy-image    画像を PNG にしてクリップボードへ
+bin/dcmenu-zip / -unzip  圧縮・解凍（7zz があれば優先、無ければ zip / ditto / tar）
 build.sh                 swiftc で build/Dcmenu.app を作る（Xcode プロジェクトは使わない）
 ```
 

@@ -1,0 +1,20 @@
+#!/bin/bash
+# dcmenu-unzip <archive>...
+# 圧縮ファイルを、それがあるフォルダに展開する（あふの 7zip.txt「解凍」の代わり）。
+# 7-Zip（7zz）があれば使い、無ければ macOS 標準の ditto（zip）/ tar（その他）。
+set -u
+[ $# -ge 1 ] || { echo "usage: dcmenu-unzip <archive>..." >&2; exit 1; }
+sevenzip="$(command -v 7zz || command -v 7z || true)"
+status=0
+for f in "$@"; do
+  dir="$(dirname "$f")"
+  if [ -n "$sevenzip" ]; then
+    "$sevenzip" x -bso0 -bsp0 -aos "-o$dir" "$f" || status=1     # -aos: 既存ファイルは上書きしない
+  else
+    case "$(printf '%s' "${f##*.}" | tr '[:upper:]' '[:lower:]')" in
+      zip) /usr/bin/ditto -x -k "$f" "$dir" || status=1 ;;
+      *)   /usr/bin/tar -xkf "$f" -C "$dir" || status=1 ;;
+    esac
+  fi
+done
+exit $status

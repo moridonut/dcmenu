@@ -1,0 +1,14 @@
+# 圧縮／解凍（あふ 7zip.txt と Lhaplus.txt より）
+#
+# DC のボタン:  archive -k %p0 %p
+# 7-Zip があれば使います（brew install sevenzip）。無ければ macOS 標準の zip / ditto。
+
+title: 圧縮／解凍
+
+a | 現在のフォルダに圧縮              | dcmenu-zip %X"%A.zip" %M
+p | 同名フォルダの中に圧縮            | dcmenu-zip %X"%A/%A.zip" %M
+e | 現在のフォルダに圧縮（暗号付き）     | dcmenu-zip -e %X"%A.zip" %M
+-
+u | 現在のフォルダに解凍              | dcmenu-unzip %M
+-
+= | Edit this                      | @edit

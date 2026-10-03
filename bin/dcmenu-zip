@@ -1,0 +1,49 @@
+#!/bin/bash
+# dcmenu-zip [-e] <archive.zip> <file|folder>...
+# ファイル・フォルダを zip に圧縮する（あふの 7zip.txt「圧縮」の代わり）。
+#   -e   パスワードを聞いて暗号化（ZipCrypto。Windows 標準の展開でも開ける）
+#
+# archive が相対パスなら、圧縮するファイルのあるフォルダからの相対パス。
+# 中のパスは「そのフォルダからの相対」で入る（/Users/... のような絶対パスにしない）。
+# 7-Zip（brew install sevenzip → 7zz）があれば使う。Windows で日本語のファイル名が化けにくい。
+set -u
+encrypt=0
+if [ "${1:-}" = "-e" ]; then encrypt=1; shift; fi
+[ $# -ge 2 ] || { echo "usage: dcmenu-zip [-e] <archive.zip> <file>..." >&2; exit 1; }
+
+archive="$1"; shift
+base="$(dirname "$1")"
+cd "$base" || exit 1
+case "$archive" in /*) ;; *) archive="$base/$archive" ;; esac
+case "$archive" in *.zip|*.ZIP) ;; *) archive="$archive.zip" ;; esac
+
+if [ -e "$archive" ]; then
+  echo "すでにあります: $archive" >&2
+  exit 1
+fi
+mkdir -p "$(dirname "$archive")" || exit 1
+
+names=()
+for f in "$@"; do
+  [ "$(dirname "$f")" = "$base" ] || { echo "同じフォルダのファイルだけ圧縮できます: $f" >&2; exit 1; }
+  names+=("$(basename "$f")")
+done
+
+pw=""
+if [ $encrypt = 1 ]; then
+  pw="$(/usr/bin/osascript \
+    -e 'text returned of (display dialog "パスワード" default answer "" with hidden answer with title "zip を暗号化")' \
+    2>/dev/null)" || exit 0          # キャンセル
+  [ -n "$pw" ] || { echo "パスワードが空です" >&2; exit 1; }
+fi
+
+sevenzip="$(command -v 7zz || command -v 7z || true)"
+if [ -n "$sevenzip" ]; then
+  args=(a -tzip -mx=7 -bso0 -bsp0 '-xr!.DS_Store' '-xr!._*')
+  [ -n "$pw" ] && args+=("-p$pw")
+  exec "$sevenzip" "${args[@]}" "$archive" "${names[@]}"
+fi
+
+args=(-r -q -X)
+[ -n "$pw" ] && args+=(-P "$pw")
+exec /usr/bin/zip "${args[@]}" "$archive" "${names[@]}" -x '*.DS_Store' -x '*/._*' -x '._*'

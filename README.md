@@ -50,6 +50,7 @@ cp -n menus/*.menu ~/.config/dcmenu/
 |---|---|---|
 | コピー | `/Users/あなた/bin/dcmenu` | `copy -o %Dt -k %p0 %p` |
 | ソート | `/Users/あなた/bin/dcmenu` | `sort` |
+| 圧縮／解凍 | `/Users/あなた/bin/dcmenu` | `archive -k %p0 %p` |
 
 それぞれ `cm_ExecuteToolbarItem` でホットキーを割り当て、**Controls は Files Panel だけ**にします。
 こうすると検索欄や名前変更の入力中には反応しないので、素の `C` のような文字キーにも割り当てられます。
@@ -138,7 +139,8 @@ n | パスをコピー…           | @menu clip
 
 ## 同梱のメニュー
 
-あふで使っていた `copymenu.txt` `ClipFilename.txt` `Shortcutmenu.txt` `Sortmenu.txt` を移植したものです。
+あふで使っていた `copymenu.txt` `ClipFilename.txt` `Shortcutmenu.txt` `Sortmenu.txt` `7zip.txt` を移植したものです
+（`7zip.txt` には `Lhaplus.txt` の「暗号付き」も足しています）。
 Mac に無いものは外したり置き換えたりしています。
 
 | あふ | dcmenu |
@@ -152,6 +154,18 @@ Mac に無いものは外したり置き換えたりしています。
 | パスをコピー `U` 拡張子も除く（キー重複） | `A` |
 | ソート `F` ファイル名降順（キー重複） | `R` |
 | ソート `B` 前に戻す | 削除（DC に相当コマンドなし） |
+| 圧縮のパスワード（名前に `-pPW` を付ける） | `E` 暗号付き（パスワードは伏せ字のダイアログで聞く） |
+
+### 圧縮／解凍について
+
+`dcmenu-zip` / `dcmenu-unzip`（`bin/`、アプリに同梱）が実際の処理をします。
+
+- **7-Zip があれば 7-Zip を使います**（`brew install sevenzip` で入る `7zz`）。日本語のファイル名を
+  Windows で開いても化けにくいので、社外に送る zip を作るなら入れておくのがおすすめです。
+  無ければ macOS 標準の `zip`（圧縮）と `ditto` / `tar`（解凍）を使います
+- zip の中のパスはフォルダからの相対パスで入り、`.DS_Store` と `._*` は入れません
+- 暗号は ZipCrypto（Windows 標準の展開機能でも開ける方式）。強度は高くありません
+- 同じ名前の zip が既にあるときは作らずにエラーにします。解凍では既存のファイルを上書きしません
 
 ## ログ
 
