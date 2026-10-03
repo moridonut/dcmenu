@@ -43,6 +43,7 @@ menus/*.menu             あふのメニューを移植した既定のメニュ�
 bin/dcmenu-copy-image    画像を PNG にしてクリップボードへ
 bin/dcmenu-zip / -unzip  圧縮・解凍（7zz があれば優先、無ければ zip / ditto / tar）
 build.sh                 swiftc で build/Dcmenu.app を作る（Xcode プロジェクトは使わない）
+install.sh               ~/.config/dcmenu/*.menu と ~/bin/dcmenu をこのリポジトリへのシンボリックリンクで配置
 ```
 
 - テストは必ず `build/Dcmenu.app/Contents/MacOS/dcmenu` 経由で（バンドルでないとメニューがフォーカスを取れない可能性）

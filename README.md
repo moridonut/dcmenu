@@ -33,10 +33,13 @@ git clone https://github.com/moridonut/dcmenu.git
 cd dcmenu
 ./build.sh
 
-mkdir -p ~/bin ~/.config/dcmenu
-ln -sf "$PWD/build/Dcmenu.app/Contents/MacOS/dcmenu" ~/bin/dcmenu
-cp -n menus/*.menu ~/.config/dcmenu/
+./install.sh
 ```
+
+`install.sh` は `~/.config/dcmenu/*.menu` と `~/bin/dcmenu` を、このリポジトリへの**シンボリックリンク**として置きます。
+メニューの「= Edit this」で開いて直すとリポジトリのファイルがそのまま変わるので、git で管理できます。
+`.menu` を新しく足したときは `./install.sh` をもう一度実行してください（何度実行しても大丈夫です。`-n` で予行演習）。
+同じ名前の普通のファイルが既にある場合は、中身が違えば `<名前>.bak-日時` に退避してからリンクにします。
 
 必要なのは Xcode Command Line Tools（`xcode-select --install`）だけです。
 

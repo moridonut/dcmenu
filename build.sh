@@ -37,7 +37,4 @@ codesign --force --sign - "$APP" >/dev/null 2>&1 || echo "   (codesign skipped)"
 
 echo "==> done: $APP"
 echo
-echo "インストール（初回のみ）:"
-echo "  mkdir -p ~/bin ~/.config/dcmenu"
-echo "  ln -sf \"$PWD/$APP/Contents/MacOS/dcmenu\" ~/bin/dcmenu"
-echo "  cp -n menus/*.menu ~/.config/dcmenu/"
+echo "初回は ./install.sh で ~/bin と ~/.config/dcmenu にリンクを張ってください。"
