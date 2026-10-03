@@ -54,6 +54,8 @@ cd dcmenu
 | コピー | `/Users/あなた/bin/dcmenu` | `copy -o %Dt -k %p0 %p` |
 | ソート | `/Users/あなた/bin/dcmenu` | `sort` |
 | 圧縮／解凍 | `/Users/あなた/bin/dcmenu` | `archive -k %p0 %p` |
+| 反対側へコピー | `/Users/あなた/bin/dcmenu` | `copyto` |
+| 反対側へ移動 | `/Users/あなた/bin/dcmenu` | `moveto` |
 
 それぞれ `cm_ExecuteToolbarItem` でホットキーを割り当て、**Controls は Files Panel だけ**にします。
 こうすると検索欄や名前変更の入力中には反応しないので、素の `C` のような文字キーにも割り当てられます。
@@ -69,7 +71,10 @@ DC 側で次のキーを割り当ててください（Files Panel）。キーを
 | キー | コマンド | パラメータ | 使うメニュー |
 |---|---|---|---|
 | `Ctrl+Opt+Shift+2` | `cm_CopySamePanel` | | コピー 2 |
-| `Ctrl+Opt+Shift+B` | `cm_Copy` | | コピー B |
+| `Ctrl+Opt+Shift+B` | `cm_Copy` | | コピー B、反対側へコピー T |
+| `Ctrl+Opt+Cmd+C` | `cm_CopyNoAsk` | | 反対側へコピー C |
+| `Ctrl+Opt+Cmd+M` | `cm_RenameNoAsk` | | 反対側へ移動 M |
+| `Ctrl+Opt+Shift+V` | `cm_Rename` | | 反対側へ移動 T |
 | `Ctrl+Opt+Cmd+F` | `cm_UniversalSingleDirectSort` | （なし） | ソート F 名前昇順 |
 | `Ctrl+Opt+Cmd+R` | `cm_UniversalSingleDirectSort` | `order=descending` | ソート R 名前降順 |
 | `Ctrl+Opt+Cmd+D` | `cm_UniversalSingleDirectSort` | `column=datetime`<br>`order=descending` | ソート D 日付降順 |
@@ -77,6 +82,9 @@ DC 側で次のキーを割り当ててください（Files Panel）。キーを
 | `Ctrl+Opt+Cmd+E` | `cm_SortByExt` | | ソート E |
 | `Ctrl+Opt+Cmd+S` | `cm_SortBySize` | | ソート S |
 | `Ctrl+Opt+Cmd+A` | `cm_SortByAttr` | | ソート A |
+
+`cm_CopyNoAsk` / `cm_RenameNoAsk` は、コピー／移動のダイアログを出さずに反対側のパネルへそのまま実行します
+（DC のコピー処理なので、進捗表示や同名ファイルの確認はいつもどおり出ます）。
 
 `cm_SortByExt` / `Size` / `Attr` は、同じ列で並んでいるときに押すと昇順・降順が入れ替わります（あふの `!` と同じ）。
 
@@ -142,7 +150,7 @@ n | パスをコピー…           | @menu clip
 
 ## 同梱のメニュー
 
-あふで使っていた `copymenu.txt` `ClipFilename.txt` `Shortcutmenu.txt` `Sortmenu.txt` `7zip.txt` を移植したものです
+あふで使っていた `copymenu.txt` `ClipFilename.txt` `Shortcutmenu.txt` `Sortmenu.txt` `7zip.txt` `defaultCopy.txt` `defaultMove.txt` を移植したものです
 （`7zip.txt` には `Lhaplus.txt` の「暗号付き」も足しています）。
 Mac に無いものは外したり置き換えたりしています。
 
@@ -157,6 +165,7 @@ Mac に無いものは外したり置き換えたりしています。
 | パスをコピー `U` 拡張子も除く（キー重複） | `A` |
 | ソート `F` ファイル名降順（キー重複） | `R` |
 | ソート `B` 前に戻す | 削除（DC に相当コマンドなし） |
+| 反対側へコピー／移動 `F` Fast File Copy | 削除（DC のコピー処理を使う） |
 | 圧縮のパスワード（名前に `-pPW` を付ける） | `E` 暗号付き（パスワードは伏せ字のダイアログで聞く） |
 
 ### 圧縮／解凍について
