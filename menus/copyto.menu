@@ -1,11 +1,12 @@
 # 反対側へコピー（あふ defaultCopy.txt より。あふでは C キー）
 #
-# DC のボタン:  copyto
+# DC のボタン:  copyto -o %Dt %p
+# もう一度 C を押すと実行（押し間違い防止の確認）。Esc で取り消し。
 # DC 側のキー割り当て（README 参照）:
 #   Ctrl+Opt+Cmd+C    cm_CopyNoAsk   … 反対側のパネルへ、確認ダイアログを出さずにコピー
 #   Ctrl+Opt+Shift+B  cm_Copy        … いつものコピーダイアログ（copy.menu の B と同じ）
 
-title: 反対側へコピー
+title: %# 個をコピー → %O
 
 c | 反対側にコピー                  | @key ctrl+opt+cmd+c
 t | コピー先を指定してコピー          | @key ctrl+opt+shift+b

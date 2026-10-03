@@ -54,8 +54,8 @@ cd dcmenu
 | コピー | `/Users/あなた/bin/dcmenu` | `copy -o %Dt -k %p0 %p` |
 | ソート | `/Users/あなた/bin/dcmenu` | `sort` |
 | 圧縮／解凍 | `/Users/あなた/bin/dcmenu` | `archive -k %p0 %p` |
-| 反対側へコピー | `/Users/あなた/bin/dcmenu` | `copyto` |
-| 反対側へ移動 | `/Users/あなた/bin/dcmenu` | `moveto` |
+| 反対側へコピー | `/Users/あなた/bin/dcmenu` | `copyto -o %Dt %p` |
+| 反対側へ移動 | `/Users/あなた/bin/dcmenu` | `moveto -o %Dt %p` |
 
 それぞれ `cm_ExecuteToolbarItem` でホットキーを割り当て、**Controls は Files Panel だけ**にします。
 こうすると検索欄や名前変更の入力中には反応しないので、素の `C` のような文字キーにも割り当てられます。
@@ -83,7 +83,9 @@ DC 側で次のキーを割り当ててください（Files Panel）。キーを
 | `Ctrl+Opt+Cmd+S` | `cm_SortBySize` | | ソート S |
 | `Ctrl+Opt+Cmd+A` | `cm_SortByAttr` | | ソート A |
 
-`cm_CopyNoAsk` / `cm_RenameNoAsk` は、コピー／移動のダイアログを出さずに反対側のパネルへそのまま実行します
+反対側へのコピー／移動は、あふと同じく **`C` → `C`、`M` → `M` の 2 回押し**です。1 回目でメニューの見出しに
+「3 個をコピー → /行き先/フォルダ」と出るので、確認してからもう一度押すと実行、`Esc` で取り消し。
+`cm_CopyNoAsk` / `cm_RenameNoAsk` は DC のコピー／移動ダイアログを出さずにそのまま実行します
 （DC のコピー処理なので、進捗表示や同名ファイルの確認はいつもどおり出ます）。
 
 `cm_SortByExt` / `Size` / `Attr` は、同じ列で並んでいるときに押すと昇順・降順が入れ替わります（あふの `!` と同じ）。
@@ -100,7 +102,7 @@ DC 側で次のキーを割り当ててください（Files Panel）。キーを
 
 ```conf
 # コメント
-title: コピー                                   ← 先頭に薄く表示される見出し
+title: コピー                                   ← 先頭に薄く表示される見出し（マクロも使える）
 
 2 | 同一フォルダにコピー     | @key ctrl+opt+shift+2
 c | カーソル位置のフォルダにコピー | /bin/cp -Rpn %M %C
@@ -142,6 +144,7 @@ n | パスをコピー…           | @menu clip
 | `%F` | 親フォルダ名 | |
 | `%U` | `file://` 形式の URL | |
 | `%X` | 実行時に入力ダイアログ。`%X"初期値"` で初期値つき | |
+| `%#` | 対象ファイルの数 | `%p` |
 | `%%` | `%` そのもの | |
 
 シェルのコマンドでは**自動でシェルクォートされる**ので、`"%P"` のように囲む必要はありません。

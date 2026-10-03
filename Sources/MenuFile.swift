@@ -159,7 +159,7 @@ enum ExpandError: Error {
 ///   %F  parent folder name     %E  extension               %A  name without extension
 ///   %B  full path w/o ext      %M  all files               %X  ask (%X"initial")
 ///   %C  file under the cursor  %O  other panel's folder    %U  file:// URL
-///   %%  literal %
+///   %#  number of files       %%  literal %
 ///
 /// quote == true  (shell commands): every value is shell-quoted; %M is a quoted list.
 /// quote == false (@clip):          values are inserted raw; %M is newline-separated.
@@ -214,6 +214,8 @@ final class Expander {
             switch code {
             case "%":
                 out.append("%")
+            case "#":
+                out.append(String(ctx.files.count))
             case "M":
                 if ctx.files.isEmpty { throw ExpandError.noFile }
                 out.append(quote ? ctx.files.map(shellQuote).joined(separator: " ")

@@ -136,7 +136,17 @@ var hops = 0
 
 while true {
     guard let file = loadMenu(current) else { exit(1) }
-    guard let item = popUp(file, at: anchor) else { exit(0) }   // Esc / clicked away
+
+    // Macros in the title (e.g. "→ %O") show what is about to happen — a confirmation
+    // step for copy/move. %X is not allowed there; a macro that can't be filled stays as-is.
+    var shown = file
+    if let t = file.title, t.contains("%"), !t.contains("%X") {
+        let titleExpander = Expander(ctx: ctx, label: "", prompt: { _, _ in nil })
+        shown.title = (try? titleExpander.expand(t, path: ctx.files.first ?? ctx.cursor,
+                                                 quote: false)) ?? t
+    }
+
+    guard let item = popUp(shown, at: anchor) else { exit(0) }   // Esc / clicked away
     appendLog("chosen: [\(item.key)] \(item.label) -> \(item.command)")
 
     let firstPath = ctx.files.first ?? ctx.cursor
