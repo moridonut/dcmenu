@@ -170,7 +170,7 @@ Mac に無いものは外したり置き換えたりしています。
 | パスをコピー `U` 拡張子も除く（キー重複） | `A` |
 | ソート `F` ファイル名降順（キー重複） | `R` |
 | ソート `B` 前に戻す | 削除（DC に相当コマンドなし） |
-| `defaultCopy.txt`（C）/ `defaultMove.txt`（M） | メニューにせず、DC で `C` → `cm_CopyNoAsk`、`M` → `cm_RenameNoAsk` を直接割り当てる（「Double Commander の設定」の 3） |
+| `defaultCopy.txt`（C）/ `defaultMove.txt`（M） | メニューにせず、DC で `C` → `cm_CopyNoAsk`、`M` → `cm_RenameNoAsk` を直接割り当てる（下記） |
 | 圧縮のパスワード（名前に `-pPW` を付ける） | `E` 暗号付き（パスワードは伏せ字のダイアログで聞く） |
 
 ### 圧縮／解凍について
