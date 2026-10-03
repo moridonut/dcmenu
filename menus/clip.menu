@@ -1,0 +1,15 @@
+# パスをコピー（あふ ClipFilename.txt より）
+# 複数マークしているときは 1 ファイル 1 行でコピーします。
+
+title: パスをコピー
+
+c | フルパス                     | @clip %P
+d | カレントフォルダのパス         | @clip %D/
+t | ダブルクォートで括る           | @clip "%P"
+/ | 末尾に /                     | @clip %P/
+u | URL 形式（file://）           | @clip %U
+-
+f | ファイル名のみ                | @clip %N
+a | 拡張子も除く                  | @clip %A
+-
+= | Edit this                   | @edit

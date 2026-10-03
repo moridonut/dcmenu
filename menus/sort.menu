@@ -1,0 +1,24 @@
+# ソートメニュー（あふ Sortmenu.txt より）
+#
+# DC のボタン:  sort
+# 中身はすべて DC のコマンドなので、DC 側で次のキーを割り当てておきます（README 参照）。
+#   Ctrl+Opt+Cmd+F  cm_UniversalSingleDirectSort  （パラメータなし = 名前・昇順）
+#   Ctrl+Opt+Cmd+R  cm_UniversalSingleDirectSort  order=descending
+#   Ctrl+Opt+Cmd+D  cm_UniversalSingleDirectSort  column=datetime / order=descending
+#   Ctrl+Opt+Cmd+T  cm_UniversalSingleDirectSort  column=datetime
+#   Ctrl+Opt+Cmd+E  cm_SortByExt   （押すたびに昇順・降順が入れ替わる）
+#   Ctrl+Opt+Cmd+S  cm_SortBySize  （同上）
+#   Ctrl+Opt+Cmd+A  cm_SortByAttr  （同上）
+
+title: ソート
+
+f | ファイル名昇順   | @key ctrl+opt+cmd+f
+r | ファイル名降順   | @key ctrl+opt+cmd+r
+d | 日付降順        | @key ctrl+opt+cmd+d
+t | 日付昇順        | @key ctrl+opt+cmd+t
+-
+e | 拡張子トグル     | @key ctrl+opt+cmd+e
+s | サイズトグル     | @key ctrl+opt+cmd+s
+a | 属性トグル       | @key ctrl+opt+cmd+a
+-
+= | Edit this      | @edit

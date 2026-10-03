@@ -1,0 +1,26 @@
+#!/bin/bash
+# dcmenu-copy-image <image>
+# 画像をクリップボードへ入れる。PNG はそのまま、JPEG/HEIC 等は PNG に変換してから。
+set -u
+f="${1:-}"
+[ -f "$f" ] || { echo "no such file: $f" >&2; exit 1; }
+
+src="$f"
+tmpdir=""
+trap '[ -n "$tmpdir" ] && rm -rf "$tmpdir"' EXIT
+
+ext="$(printf '%s' "${f##*.}" | tr '[:upper:]' '[:lower:]')"
+if [ "$ext" != "png" ]; then
+  tmpdir="$(/usr/bin/mktemp -d -t dcmenuimg)"
+  src="$tmpdir/image.png"
+  if ! /usr/bin/sips -s format png "$f" --out "$src" >/dev/null; then
+    echo "画像として読めませんでした: $f" >&2
+    exit 1
+  fi
+fi
+
+/usr/bin/osascript \
+  -e 'on run argv' \
+  -e '  set the clipboard to (read (POSIX file (item 1 of argv)) as «class PNGf»)' \
+  -e 'end run' \
+  "$src"

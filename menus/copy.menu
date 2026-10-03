@@ -1,0 +1,24 @@
+# コピーメニュー（あふ copymenu.txt より）
+#
+# DC のボタン:  copy -o %Dt -k %p0 %p
+#   %M = マークしたファイル（無ければカーソル位置）  %C = カーソル位置  %O = 反対側のフォルダ
+#
+# @key の行は、DC 側で同じキーにコマンドを割り当てておく必要があります（README 参照）。
+
+title: コピー
+
+2 | 同一フォルダにコピー              | @key ctrl+opt+shift+2
+c | カーソル位置のフォルダにコピー      | /bin/cp -Rpn %M %C
+u | 上の階層にコピー                  | /bin/cp -Rpn %M %D/..
+-
+n | パスをコピー…                    | @menu clip
+f | ファイル名をコピー                | @clip %N
+t | ツリー構造のみコピー（反対側へ）     | /usr/bin/rsync -a --include='*/' --exclude='*' %M %O/
+-
+s | ショートカット（シンボリックリンク）… | @menu shortcut
+b | コピー先を入力して指定             | @key ctrl+opt+shift+b
+-
+e | ファイルの内容をクリップボードにコピー | /usr/bin/pbcopy < %P
+p | 画像をクリップボードにコピー        | dcmenu-copy-image %P
+-
+= | Edit this                       | @edit

@@ -1,0 +1,11 @@
+# ショートカットの作成（あふ Shortcutmenu.txt より）
+# Windows のショートカットの代わりにシンボリックリンクを作ります。
+
+title: シンボリックリンクの作成
+
+t | 反対側のフォルダに作成          | /bin/ln -s %M %O/
+r | 名前を変更して反対側に作成      | /bin/ln -s %P %O/%X"%N"
+-
+k | デスクトップに作成             | /bin/ln -s %M "$HOME/Desktop/"
+-
+= | Edit this                   | @edit
