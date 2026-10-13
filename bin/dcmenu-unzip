@@ -1,13 +1,25 @@
 #!/bin/bash
-# dcmenu-unzip <archive>...
+# dcmenu-unzip [-d] <archive>...
 # 圧縮ファイルを、それがあるフォルダに展開する（あふの 7zip.txt「解凍」の代わり）。
+#   -d   圧縮ファイルと同じ名前のフォルダを作って、その中に展開する（foo.zip → foo/）
 # 7-Zip（7zz）があれば使い、無ければ macOS 標準の ditto（zip）/ tar（その他）。
 set -u
-[ $# -ge 1 ] || { echo "usage: dcmenu-unzip <archive>..." >&2; exit 1; }
+subdir=0
+if [ "${1:-}" = "-d" ]; then subdir=1; shift; fi
+[ $# -ge 1 ] || { echo "usage: dcmenu-unzip [-d] <archive>..." >&2; exit 1; }
 sevenzip="$(command -v 7zz || command -v 7z || true)"
 status=0
 for f in "$@"; do
   dir="$(dirname "$f")"
+  if [ $subdir = 1 ]; then
+    name="$(basename "$f")"
+    case "$(printf '%s' "$name" | tr '[:upper:]' '[:lower:]')" in
+      *.tar.gz|*.tar.bz2|*.tar.xz|*.tar.zst) name="${name%.*}"; name="${name%.*}" ;;
+      *.*) name="${name%.*}" ;;
+    esac
+    dir="$dir/$name"
+    mkdir -p "$dir" || { status=1; continue; }
+  fi
   if [ -n "$sevenzip" ]; then
     "$sevenzip" x -bso0 -bsp0 -aos "-o$dir" "$f" || status=1     # -aos: 既存ファイルは上書きしない
   else

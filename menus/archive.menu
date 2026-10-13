@@ -10,5 +10,6 @@ p | 同名フォルダの中に圧縮            | dcmenu-zip %X"%A/%A.zip" %M
 e | 現在のフォルダに圧縮（暗号付き）     | dcmenu-zip -e %X"%A.zip" %M
 -
 u | 現在のフォルダに解凍              | dcmenu-unzip %M
+d | 同名フォルダを作って解凍          | dcmenu-unzip -d %M
 -
 = | Edit this                      | @edit
