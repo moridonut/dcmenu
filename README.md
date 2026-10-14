@@ -56,6 +56,7 @@ cd dcmenu
 | 圧縮／解凍 | `/Users/あなた/bin/dcmenu` | `archive -k %p0 %p` |
 | 反対側へコピー | `/Users/あなた/bin/dcmenu` | `copyto -o %Dt %p` |
 | 反対側へ移動 | `/Users/あなた/bin/dcmenu` | `moveto -o %Dt %p` |
+| クラウド | `/Users/あなた/bin/dcmenu` | `cloud -k %p0` |
 
 それぞれ `cm_ExecuteToolbarItem` でホットキーを割り当て、**Controls は Files Panel だけ**にします。
 こうすると検索欄や名前変更の入力中には反応しないので、素の `C` のような文字キーにも割り当てられます。

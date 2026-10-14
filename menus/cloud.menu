@@ -1,0 +1,13 @@
+# クラウド（~/bin/dc-cloud-link.sh を呼ぶ）
+#
+# DC のボタン:  cloud -k %p0
+#   %C = カーソル位置のファイル（DC の %p0 と同じもの）
+# 以前の 3 つのボタン（/bin/bash dc-cloud-link.sh %p0 copy|open|folder）を 1 つにまとめたもの。
+
+title: クラウド
+
+c | クラウドのリンクをコピー     | /bin/bash "$HOME/bin/dc-cloud-link.sh" %C copy
+o | クラウドで開く             | /bin/bash "$HOME/bin/dc-cloud-link.sh" %C open
+f | クラウドでフォルダを開く     | /bin/bash "$HOME/bin/dc-cloud-link.sh" %C folder
+-
+= | Edit this                | @edit
